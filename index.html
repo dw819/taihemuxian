@@ -34,7 +34,7 @@
         background: var(--bg-page);
         color: var(--text);
         min-height: 100vh;
-        padding: 0 0 88px;
+        padding: 0 0 120px;
         text-align: center;
       }
 
@@ -134,12 +134,34 @@
         left: 0;
         right: 0;
         background: var(--bg-card);
-        padding: 16px 20px;
+        padding: 12px 20px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 -4px 24px rgba(92, 74, 61, 0.1);
+        border-top: 1px solid rgba(139, 115, 85, 0.12);
+      }
+
+      .bottom-nav-buttons {
         display: flex;
         justify-content: center;
         gap: 16px;
-        box-shadow: 0 -4px 24px rgba(92, 74, 61, 0.1);
-        border-top: 1px solid rgba(139, 115, 85, 0.12);
+      }
+
+      .icp-footer {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .icp-footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+      }
+
+      .icp-footer a:hover {
+        color: var(--wood-mid);
+        text-decoration: underline;
       }
 
       .nav-button {
@@ -232,18 +254,36 @@
         height: 100vh;
         background: rgba(45, 38, 32, 0.94);
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 18px;
         z-index: 1000;
         cursor: pointer;
+        padding: 24px 16px 32px;
+        box-sizing: border-box;
       }
 
       .fullscreen img {
-        max-width: 90%;
-        max-height: 90%;
+        max-width: 92%;
+        max-height: 72vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
         border-radius: var(--radius-sm);
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         pointer-events: none;
+        flex-shrink: 0;
+      }
+
+      .fullscreen-hint {
+        margin: 0;
+        font-size: 13px;
+        color: rgba(255, 254, 249, 0.55);
+        letter-spacing: 0.04em;
+        pointer-events: none;
+        -webkit-user-select: none;
+        user-select: none;
       }
 
       .image-button {
@@ -307,8 +347,13 @@
     </div>
 
     <nav class="bottom-nav">
-      <button class="nav-button" onclick="loadHomePage()">首页</button>
-      <button class="nav-button" onclick="goBack()">返回</button>
+      <div class="bottom-nav-buttons">
+        <button class="nav-button" onclick="loadHomePage()">首页</button>
+        <button class="nav-button" onclick="goBack()">返回</button>
+      </div>
+      <div class="icp-footer">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">粤ICP备2025377793号-3</a>
+      </div>
     </nav>
 
     <script src="https://thmuxian.oss-cn-guangzhou.aliyuncs.com/THmuxian/imageCounts.js"></script>
@@ -748,11 +793,14 @@
 
         let fullScreenImg = document.createElement("img");
         fullScreenImg.src = img.src;
-        fullScreenImg.style.maxWidth = "90%";
-        fullScreenImg.style.maxHeight = "90%";
-        fullScreenImg.style.borderRadius = "8px";
+        fullScreenImg.alt = img.alt || "大图预览";
+
+        let hint = document.createElement("p");
+        hint.className = "fullscreen-hint";
+        hint.textContent = "点击空白处关闭";
 
         fullScreenDiv.appendChild(fullScreenImg);
+        fullScreenDiv.appendChild(hint);
         document.body.appendChild(fullScreenDiv);
       }
 
